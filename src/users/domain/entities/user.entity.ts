@@ -1,6 +1,5 @@
 import { Entity } from '@/shared/domain/entities/entity';
 import { UserValidatorFactory } from '../validators/user.validator';
-import { Validator } from 'class-validator';
 
 export type UserProps = {
   name: string;
