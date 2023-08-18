@@ -2,7 +2,7 @@ import { validateSync } from 'class-validator';
 import {
   FieldsError,
   ValidatorFieldsInterface,
-} from './valitador-fields.interface';
+} from './validator-fields.interface';
 
 export abstract class ClassValidatorFields<PropsValidated>
   implements ValidatorFieldsInterface<PropsValidated>
@@ -21,9 +21,7 @@ export abstract class ClassValidatorFields<PropsValidated>
 
         this.errors[field] = Object.values(error.constraints);
       }
-    } else {
-      this.validatedData = data;
-    }
+    } else this.validatedData = data;
 
     return !errors.length;
   }
