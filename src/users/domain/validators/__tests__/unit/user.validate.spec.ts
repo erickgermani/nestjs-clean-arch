@@ -15,7 +15,7 @@ describe('UserValidator unit tests', () => {
     props = UserDataBuilder({});
   });
 
-  it('Valid case for ùser rules', () => {
+  it('Valid case for user rules', () => {
     const isValid = sut.validate(props);
 
     expect(isValid).toBeTruthy();
