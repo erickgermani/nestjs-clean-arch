@@ -3,7 +3,7 @@ import { BadRequestError } from '../errors/bad-request-error';
 import { UserEntity } from '@/users/domain/entities/user.entity';
 import { HashProvider } from '@/shared/application/providers/hash-provider';
 
-export namespace SignupUseCase {
+namespace SignupUseCase {
   export type Input = {
     name: string;
     email: string;
@@ -32,7 +32,7 @@ export namespace SignupUseCase {
 
       await this.userRepository.emailExists(email);
 
-      const hashPassword = this.hashProvider.generateHash(password);
+      const hashPassword = await this.hashProvider.generateHash(password);
 
       const entity = new UserEntity(
         Object.assign(input, { password: hashPassword }),
@@ -44,3 +44,5 @@ export namespace SignupUseCase {
     }
   }
 }
+
+export default SignupUseCase;
