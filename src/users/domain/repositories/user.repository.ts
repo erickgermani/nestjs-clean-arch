@@ -5,7 +5,7 @@ import {
   SearchableRepositoryInterface,
 } from '@/shared/domain/repositories/searchable-repository-contracts';
 
-export namespace UserRepository {
+namespace UserRepository {
   export type Filter = string;
 
   export class SearchParams extends DefaultSearchParams<Filter> {}
@@ -23,3 +23,5 @@ export namespace UserRepository {
     emailExists(email: string): Promise<void>;
   }
 }
+
+export default UserRepository;

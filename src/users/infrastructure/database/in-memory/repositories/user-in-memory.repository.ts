@@ -3,7 +3,7 @@ import { NotFoundError } from '@/shared/domain/errors/not-found-error';
 import { InMemorySearchableRepository } from '@/shared/domain/repositories/in-memory-searchable.repository';
 import { SortDirection } from '@/shared/domain/repositories/searchable-repository-contracts';
 import { UserEntity } from '@/users/domain/entities/user.entity';
-import { UserRepository } from '@/users/domain/repositories/user.repository';
+import UserRepository from '@/users/domain/repositories/user.repository';
 
 export default class UserInMemoryRepository
   extends InMemorySearchableRepository<UserEntity>
