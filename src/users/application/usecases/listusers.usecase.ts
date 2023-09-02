@@ -7,7 +7,7 @@ import {
   PaginationOutputMapper,
 } from '@/shared/application/dtos/pagination-output';
 
-namespace ListUserUseCase {
+namespace ListUsersUseCase {
   export type Input = SearchInput;
 
   export type Output = PaginationOutput<UserOutput>;
@@ -33,4 +33,4 @@ namespace ListUserUseCase {
   }
 }
 
-export default ListUserUseCase;
+export default ListUsersUseCase;
