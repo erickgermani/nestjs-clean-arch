@@ -2,7 +2,7 @@ import UserInMemoryRepository from '@/users/infrastructure/database/in-memory/re
 import { NotFoundError } from '@/shared/domain/errors/not-found-error';
 import { UserEntity } from '@/users/domain/entities/user.entity';
 import { UserDataBuilder } from '@/users/domain/testing/helpers/user-data-builder';
-import DeleteUserUseCase from '../../deleteuser.usecase';
+import DeleteUserUseCase from '../../delete-user.usecase';
 
 describe('DeleteUserUseCase unit tests', () => {
   let sut: DeleteUserUseCase.UseCase;

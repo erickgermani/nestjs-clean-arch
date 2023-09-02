@@ -1,4 +1,4 @@
-import ListUsersUseCase from '../../listusers.usecase';
+import ListUsersUseCase from '../../list-users.usecase';
 import UserInMemoryRepository from '@/users/infrastructure/database/in-memory/repositories/user-in-memory.repository';
 import UserRepository from '@/users/domain/repositories/user.repository';
 import { UserEntity } from '@/users/domain/entities/user.entity';

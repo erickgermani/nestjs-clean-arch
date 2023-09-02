@@ -7,11 +7,11 @@ import { BcryptjsHashProvider } from './providers/hash-provider/bcryptjs-hash.pr
 import UserRepository from '../domain/repositories/user.repository';
 import { HashProvider } from '@/shared/application/providers/hash-provider';
 import SignupUseCase from '../application/usecases/signup.usecase';
-import GetUserUseCase from '../application/usecases/getuser.usecase';
-import ListUsersUseCase from '../application/usecases/listusers.usecase';
-import UpdateUserUseCase from '../application/usecases/updateuser.usecase';
-import UpdatePasswordUseCase from '../application/usecases/updatepassword.usecase';
-import DeleteUserUseCase from '../application/usecases/deleteuser.usecase';
+import GetUserUseCase from '../application/usecases/get-user.usecase';
+import ListUsersUseCase from '../application/usecases/list-users.usecase';
+import UpdateUserUseCase from '../application/usecases/update-user.usecase';
+import UpdatePasswordUseCase from '../application/usecases/update-password.usecase';
+import DeleteUserUseCase from '../application/usecases/delete-user.usecase';
 
 @Module({
   controllers: [UsersController],

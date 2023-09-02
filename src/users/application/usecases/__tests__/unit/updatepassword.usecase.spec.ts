@@ -2,7 +2,7 @@ import UserInMemoryRepository from '@/users/infrastructure/database/in-memory/re
 import { NotFoundError } from '@/shared/domain/errors/not-found-error';
 import { UserEntity } from '@/users/domain/entities/user.entity';
 import { UserDataBuilder } from '@/users/domain/testing/helpers/user-data-builder';
-import UpdatePasswordUseCase from '../../updatepassword.usecase';
+import UpdatePasswordUseCase from '../../update-password.usecase';
 import { HashProvider } from '@/shared/application/providers/hash-provider';
 import { BcryptjsHashProvider } from '@/users/infrastructure/providers/hash-provider/bcryptjs-hash.provider';
 import { InvalidPasswordError } from '@/shared/application/errors/invalid-password-error';
