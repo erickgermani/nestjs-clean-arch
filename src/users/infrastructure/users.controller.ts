@@ -39,7 +39,7 @@ export class UsersController {
   private updatePasswordUseCase: UpdatePasswordUseCase.UseCase;
 
   @Inject(DeleteUserUseCase.UseCase)
-  private deleteUserUsecase: DeleteUserUseCase.UseCase;
+  private deleteUserUseCase: DeleteUserUseCase.UseCase;
 
   @Inject(GetUserUseCase.UseCase)
   private getUserUseCase: GetUserUseCase.UseCase;
@@ -84,6 +84,6 @@ export class UsersController {
   @HttpCode(204)
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    await this.deleteUserUsecase.execute({ id });
+    await this.deleteUserUseCase.execute({ id });
   }
 }
