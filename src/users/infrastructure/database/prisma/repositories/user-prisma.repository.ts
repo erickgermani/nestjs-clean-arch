@@ -7,7 +7,7 @@ import UserModelMapper from '../models/user-model.mapper';
 class UserPrismaRepository implements UserRepository.Repository {
   sortableFields: string[];
 
-  constructor(protected prismaService: PrismaService) {}
+  constructor(private prismaService: PrismaService) {}
 
   findByEmail(email: string): Promise<UserEntity> {
     throw new Error('Method not implemented.');
