@@ -166,4 +166,33 @@ describe('UserPrismaRepository integration tests', () => {
       );
     });
   });
+
+  it('Should throws error on update when entity not found', async () => {
+    const entity = new UserEntity(UserDataBuilder());
+
+    expect(() => sut.update(entity)).rejects.toThrow(
+      new Error(`UserModel not found using ID ${entity._id}`),
+    );
+  });
+
+  it('Should update a entity', async () => {
+    const entity = new UserEntity(UserDataBuilder());
+    const newUser = await prismaService.user.create({
+      data: entity.toJSON(),
+    });
+
+    entity.update('new name');
+
+    await sut.update(entity);
+
+    const output = await prismaService.user.findUnique({
+      where: {
+        id: entity._id,
+      },
+    });
+
+    expect(output.name).toBe('new name');
+  });
+
+  describe('Search method tests', () => {});
 });
