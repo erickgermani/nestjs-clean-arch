@@ -1,4 +1,6 @@
+import ColletionPresenter from '@/shared/infrastructure/presenters/collection.presenter';
 import { UserOutput } from '@/users/application/dtos/user-output';
+import ListUsersUseCase from '@/users/application/usecases/list-users.usecase';
 import { Transform } from 'class-transformer';
 
 class UserPresenter {
@@ -13,6 +15,16 @@ class UserPresenter {
     this.name = output.name;
     this.email = output.email;
     this.createdAt = output.createdAt;
+  }
+}
+
+export class UserCollectionPresenter extends ColletionPresenter {
+  data: UserPresenter[];
+
+  constructor(output: ListUsersUseCase.Output) {
+    const { items, ...paginationProps } = output;
+    super(paginationProps);
+    this.data = items.map(item => new UserPresenter(item));
   }
 }
 
