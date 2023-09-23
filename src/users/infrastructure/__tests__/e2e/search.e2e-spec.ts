@@ -65,7 +65,7 @@ describe('UsersController e2e tests', () => {
       const queryParams = new URLSearchParams(searchParams).toString();
 
       const res = await request(app.getHttpServer())
-        .get(`/users?${queryParams}`)
+        .get(`/users/?${queryParams}`)
         .expect(200);
 
       expect(Object.keys(res.body)).toStrictEqual(['data', 'meta']);
@@ -80,6 +80,79 @@ describe('UsersController e2e tests', () => {
           currentPage: 1,
           perPage: 15,
           lastPage: 1,
+        },
+      });
+    });
+
+    it('should return the users ordered by createdAt', async () => {
+      const entities: UserEntity[] = [];
+      const arrange = ['test', 'a', 'TEST', 'b', 'TeSt'];
+
+      arrange.forEach((element, index) => {
+        entities.push(
+          new UserEntity({
+            ...UserDataBuilder(),
+            name: element,
+            email: `a${index}@a.com`,
+          }),
+        );
+      });
+
+      await prismaService.user.createMany({
+        data: entities.map(entity => entity.toJSON()),
+      });
+
+      let searchParams = {
+        page: 1,
+        perPage: 2,
+        sort: 'name',
+        sortDir: 'asc',
+        filter: 'TEST',
+      };
+
+      let queryParams = new URLSearchParams(searchParams as any).toString();
+
+      let res = await request(app.getHttpServer())
+        .get(`/users/?${queryParams}`)
+        .expect(200);
+
+      expect(Object.keys(res.body)).toStrictEqual(['data', 'meta']);
+      expect(res.body).toStrictEqual({
+        data: [entities[0].toJSON(), entities[4].toJSON()].map(entity =>
+          instanceToPlain(UsersController.userToResponse(entity)),
+        ),
+        meta: {
+          total: 3,
+          currentPage: 1,
+          perPage: 2,
+          lastPage: 2,
+        },
+      });
+
+      searchParams = {
+        page: 2,
+        perPage: 2,
+        sort: 'name',
+        sortDir: 'asc',
+        filter: 'TEST',
+      };
+
+      queryParams = new URLSearchParams(searchParams as any).toString();
+
+      res = await request(app.getHttpServer())
+        .get(`/users/?${queryParams}`)
+        .expect(200);
+
+      expect(Object.keys(res.body)).toStrictEqual(['data', 'meta']);
+      expect(res.body).toStrictEqual({
+        data: [entities[2].toJSON()].map(entity =>
+          instanceToPlain(UsersController.userToResponse(entity)),
+        ),
+        meta: {
+          total: 3,
+          currentPage: 2,
+          perPage: 2,
+          lastPage: 2,
         },
       });
     });
