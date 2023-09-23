@@ -11,6 +11,8 @@ import request from 'supertest';
 import { UsersController } from '../../users.controller';
 import { instanceToPlain } from 'class-transformer';
 import { applyGlobalConfig } from '@/global-config';
+import { UserEntity } from '@/users/domain/entities/user.entity';
+import { UserDataBuilder } from '@/users/domain/testing/helpers/user-data-builder';
 
 describe('UsersController unit tests', () => {
   let app: INestApplication;
@@ -138,6 +140,22 @@ describe('UsersController unit tests', () => {
       expect(res.body.message).toEqual([
         'property invalidField should not exist',
       ]);
+    });
+
+    it('should return an error with 409 code when email is duplicated', async () => {
+      const entity = new UserEntity(UserDataBuilder({ ...signupDto }));
+
+      await repository.insert(entity);
+
+      await request(app.getHttpServer())
+        .post('/users')
+        .send(signupDto)
+        .expect(409)
+        .expect({
+          statusCode: 409,
+          error: 'Conflict',
+          message: 'Email address already used',
+        });
     });
   });
 });
