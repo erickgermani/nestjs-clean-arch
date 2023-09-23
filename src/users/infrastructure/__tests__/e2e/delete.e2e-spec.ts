@@ -44,22 +44,17 @@ describe('UsersController e2e tests', () => {
     await repository.insert(entity);
   });
 
-  describe('GET /users/:id', () => {
-    it('should get an user', async () => {
-      const res = await request(app.getHttpServer())
-        .get('/users/' + entity.id)
-        .expect(200);
-
-      const presenter = UsersController.userToResponse(entity.toJSON());
-
-      const serialized = instanceToPlain(presenter);
-
-      expect(res.body.data).toStrictEqual(serialized);
+  describe('DELETE /users/:id', () => {
+    it('should delete an user', async () => {
+      await request(app.getHttpServer())
+        .delete('/users/' + entity.id)
+        .expect(204)
+        .expect({});
     });
 
     it('should return an error with 404 code when the throw NotFoundError with invalid id', async () => {
       await request(app.getHttpServer())
-        .get('/users/fakeId')
+        .delete('/users/fakeId')
         .expect(404)
         .expect({
           statusCode: 404,
