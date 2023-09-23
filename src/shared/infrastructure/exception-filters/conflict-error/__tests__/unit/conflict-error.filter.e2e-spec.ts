@@ -26,10 +26,6 @@ describe('ConflictErrorFilter (e2e)', () => {
     await app.init();
   });
 
-  afterAll(async () => {
-    await module.close();
-  });
-
   it('should be defined', () => {
     expect(new ConflictErrorFilter()).toBeDefined();
   });
