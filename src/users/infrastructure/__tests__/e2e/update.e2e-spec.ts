@@ -82,7 +82,7 @@ describe('UsersController e2e tests', () => {
     });
 
     it('should return an error with 404 code when the throw NotFoundError with invalid id', async () => {
-      const res = await request(app.getHttpServer())
+      await request(app.getHttpServer())
         .put('/users/fakeId')
         .send(updateUserDto)
         .expect(404)
