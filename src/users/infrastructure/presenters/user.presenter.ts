@@ -18,7 +18,7 @@ class UserPresenter {
   }
 }
 
-export class UserCollectionPresenter extends ColletionPresenter {
+class UserCollectionPresenter extends ColletionPresenter {
   data: UserPresenter[];
 
   constructor(output: ListUsersUseCase.Output) {
@@ -28,4 +28,5 @@ export class UserCollectionPresenter extends ColletionPresenter {
   }
 }
 
+export { UserCollectionPresenter };
 export default UserPresenter;
