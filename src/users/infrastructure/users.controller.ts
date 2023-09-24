@@ -10,6 +10,7 @@ import {
   HttpCode,
   Query,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { SignupDto } from './dtos/signup.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
@@ -28,6 +29,7 @@ import UserPresenter, {
   UserCollectionPresenter,
 } from './presenters/user.presenter';
 import { AuthService } from '@/auth/infrastructure/auth.service';
+import { AuthGuard } from '@/auth/infrastructure/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -76,18 +78,21 @@ export class UsersController {
     return this.authService.generateJwt(output.id);
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   async search(@Query() searchParams: ListUsersDto) {
     const output = await this.listUsersUseCase.execute(searchParams);
     return UsersController.listUsersToResponse(output);
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const output = await this.getUserUseCase.execute({ id });
     return UsersController.userToResponse(output);
   }
 
+  @UseGuards(AuthGuard)
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     const output = await this.updateUserUseCase.execute({
@@ -97,6 +102,7 @@ export class UsersController {
     return UsersController.userToResponse(output);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   async updatePassword(
     @Param('id') id: string,
@@ -109,6 +115,7 @@ export class UsersController {
     return UsersController.userToResponse(output);
   }
 
+  @UseGuards(AuthGuard)
   @HttpCode(204)
   @Delete(':id')
   async remove(@Param('id') id: string) {
