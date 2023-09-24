@@ -138,5 +138,23 @@ describe('UsersController e2e tests', () => {
         'UserModel not found using email fake@email.com',
       );
     });
+
+    it('should return an error with 404 code when password is incorrect', async () => {
+      const passwordHash = await hashProvider.generateHash(signinDto.password);
+
+      const entity = new UserEntity(
+        UserDataBuilder({ email: signinDto.email, password: passwordHash }),
+      );
+
+      await repository.insert(entity);
+
+      const res = await request(app.getHttpServer())
+        .post('/users/login')
+        .send({ email: signinDto.email, password: 'fake' })
+        .expect(400);
+
+      expect(res.body.error).toBe('Bad Request');
+      expect(res.body.message).toEqual('Invalid credentials');
+    });
   });
 });
