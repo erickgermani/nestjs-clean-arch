@@ -18,6 +18,7 @@ export function applyGlobalConfig(app: INestApplication) {
       transform: true,
     }),
   );
+
   app.useGlobalInterceptors(
     new WrapperDataInterceptor(),
     new ClassSerializerInterceptor(app.get(Reflector)),

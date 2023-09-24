@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UsersController } from './users.controller';
 import SigninUseCase from '../application/usecases/signin.usecase';
-import UserInMemoryRepository from './database/in-memory/repositories/user-in-memory.repository';
 import { BcryptjsHashProvider } from './providers/hash-provider/bcryptjs-hash.provider';
 import UserRepository from '../domain/repositories/user.repository';
 import { HashProvider } from '@/shared/application/providers/hash-provider';
@@ -13,8 +12,10 @@ import UpdatePasswordUseCase from '../application/usecases/update-password.useca
 import DeleteUserUseCase from '../application/usecases/delete-user.usecase';
 import { PrismaService } from '@/shared/infrastructure/database/prisma/prisma.service';
 import UserPrismaRepository from './database/prisma/repositories/user-prisma.repository';
+import { AuthModule } from '@/auth/infrastructure/auth.module';
 
 @Module({
+  imports: [AuthModule],
   controllers: [UsersController],
   providers: [
     {
