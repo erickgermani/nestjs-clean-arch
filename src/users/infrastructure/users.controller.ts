@@ -72,12 +72,43 @@ export class UsersController {
     return new UserCollectionPresenter(output);
   }
 
+  @ApiResponse({
+    status: 409,
+    description: 'Email conflict',
+  })
+  @ApiResponse({
+    status: 422,
+    description: 'Body request with invalid data',
+  })
   @Post()
   async create(@Body() signupDto: SignupDto) {
     const output = await this.signupUseCase.execute(signupDto);
     return UsersController.userToResponse(output);
   }
 
+  @ApiResponse({
+    status: 200,
+    schema: {
+      type: 'object',
+      properties: {
+        accessToken: {
+          type: 'string',
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 422,
+    description: 'Body request with invalid data',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Email not found',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Invalid credentials',
+  })
   @HttpCode(200)
   @Post('login')
   async login(@Body() signinDto: SigninDto) {
@@ -122,6 +153,15 @@ export class UsersController {
     return UsersController.listUsersToResponse(output);
   }
 
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 404,
+    description: 'Id not found',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized access',
+  })
   @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
@@ -129,6 +169,19 @@ export class UsersController {
     return UsersController.userToResponse(output);
   }
 
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 422,
+    description: 'Body request with invalid data',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Id not found',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized access',
+  })
   @UseGuards(AuthGuard)
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
@@ -139,6 +192,19 @@ export class UsersController {
     return UsersController.userToResponse(output);
   }
 
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 422,
+    description: 'Body request with invalid data',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Id not found',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized access',
+  })
   @UseGuards(AuthGuard)
   @Patch(':id')
   async updatePassword(
@@ -152,6 +218,19 @@ export class UsersController {
     return UsersController.userToResponse(output);
   }
 
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 204,
+    description: 'Deletion confirmation response',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Id not found',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized access',
+  })
   @UseGuards(AuthGuard)
   @HttpCode(204)
   @Delete(':id')
