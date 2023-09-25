@@ -8,15 +8,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18
           cache: 'npm'
-      - run: ci
-      - run: npm run tests:unit
-          env:
-            PORT: 3000
-            NODE_ENV: test
-            JWT_SECRET: fake_secret
-            JWT_EXPIRES_IN: 86400
-            DATABASE_URL: fake_url
+
+      - run: npm ci
+
+      - run: npm run test:unit
+        env:
+          PORT: 3000
+          NODE_ENV: test
+          JWT_SECRET: fake_secret
+          JWT_EXPIRES_IN: 86400
+          DATABASE_URL: fake_url
