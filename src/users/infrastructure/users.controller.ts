@@ -30,7 +30,14 @@ import UserPresenter, {
 } from './presenters/user.presenter';
 import { AuthService } from '@/auth/infrastructure/auth.service';
 import { AuthGuard } from '@/auth/infrastructure/auth.guard';
+import {
+  ApiBearerAuth,
+  ApiResponse,
+  ApiTags,
+  getSchemaPath,
+} from '@nestjs/swagger';
 
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
   @Inject(SignupUseCase.UseCase)
@@ -78,6 +85,36 @@ export class UsersController {
     return this.authService.generateJwt(output.id);
   }
 
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    schema: {
+      type: 'object',
+      properties: {
+        meta: {
+          type: 'object',
+          properties: {
+            total: { type: 'number' },
+            currentPage: { type: 'number' },
+            lastPage: { type: 'number' },
+            perPage: { type: 'number' },
+          },
+        },
+        data: {
+          type: 'array',
+          items: { $ref: getSchemaPath(UserPresenter) },
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 422,
+    description: 'Invalid query params',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized access',
+  })
   @UseGuards(AuthGuard)
   @Get()
   async search(@Query() searchParams: ListUsersDto) {
