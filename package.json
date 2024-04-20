@@ -8,6 +8,9 @@
   "engines": {
     "node": ">=18"
   },
+  "prisma": {
+    "schema": "src/shared/infrastructure/database/prisma/schema.prisma"
+  },
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
